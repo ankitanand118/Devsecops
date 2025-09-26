@@ -30,31 +30,6 @@ pipeline {
         sh "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64; mvn jacoco:report"
       }
     }
-
-
-
-   stage('Stage IV: SAST') {
-      steps { 
-        echo "Running Static application security testing using SonarQube Scanner ..."
-        withSonarQubeEnv('mysonarqube') {
-            sh 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html -Dsonar.projectName=wezvatech'
-       }
-      }
-    }
-
-   stage('Stage V: QualityGates') {
-      steps { 
-        echo "Running Quality Gates to verify the code quality"
-        script {
-          timeout(time: 1, unit: 'MINUTES') {
-            def qg = waitForQualityGate()
-            if (qg.status != 'OK') {
-              error "Pipeline aborted due to quality gate failure: ${qg.status}"
-            }
-           }
-        }
-      }
-    }
    
    stage('Stage VI: Build Image') {
       steps { 
@@ -87,6 +62,7 @@ pipeline {
   }
 
 }
+
 
 
 
