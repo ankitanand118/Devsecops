@@ -6,7 +6,6 @@ pipeline {
         registryCredential = 'dockerhub' 
    } 
 	tools{
-        jdk 'jdk11'
         maven 'maven3'
         }
 
@@ -92,5 +91,6 @@ pipeline {
   }
 
 }
+
 
 
