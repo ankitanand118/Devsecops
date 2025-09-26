@@ -4,7 +4,11 @@ pipeline {
    environment { 
         registry = "ankitanand118/democicd" 
         registryCredential = 'dockerhub' 
-   }
+   } 
+	tools{
+        jdk 'jdk11'
+        maven 'maven3'
+        }
 
   stages {
     stage('Checkout') {
@@ -88,4 +92,5 @@ pipeline {
   }
 
 }
+
 
